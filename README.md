@@ -1,92 +1,97 @@
-# Discord Bot Project
+# Amber (SamBot)
 
-This is a simple Discord bot project built with Node.js, using "discord.js" library.
+Il s'agit d'une projet d'application discord dans laquelle je cherche à proposer des commandes basiques afin de m'entraîner à la programmation avec l'API Discord.js.
 
-A basic command is implemented.
+Je tente aussi d'ajouter des fonctionnalités supplémentaires comme des alertes Twitch et World Of Warcraft.
 
-## Commands Available 
-// Moderation Commands
-- `/setsuggest`: The bot will respond with "Suggest command set!".
-- `/serverinfo`: The bot will respond with "Twitch info command!".
 
-// Utility Commands
-- `/help`: The bot will respond with a list of available commands and their descriptions.
-- `/ping`: The bot will respond with "Pong!". // This command evolued to include latency measurement.
-- `/avatar`: The bot will respond with the avatar of a user.
+## Commandes Disponibles // Available Commands
+// Commandes de Modération
+- `/setsuggest`: Cette commande permet de définir le canal où les suggestions seront postées.
+
+
+// Commandes Utilitaires
+- `/info`: Le bot répondra avec des informations sur lui-même.
+- `/ping`: Le bot répondra avec le statut du bot comme la latencen, si il est en ligne, etc.
+- `/avatar`: Le bot répondra avec l'avatar de l'utilisateur mentionné ou de l'utilisateur qui a utilisé la commande.
+
+- `/roleinfo`: Le bot répondra avec des informations sur un rôle.
+- `/serverinfo`: Cette commande affiche des informations sur le serveur.
+- `/userinfo`: Le bot répondra avec des informations sur un utilisateur.
+
 
 // Twitch Streamer Commands
-- `/twitchinfo`: The bot will respond with "Twitch info command!".
+- `/twitchinfo`: Cette commande fournit des informations sur un streamer Twitch spécifié.
 
 // Message Commands
-- `/post`: The bot will respond with "This is a post command!".
-- `/suggest`: The bot will respond with "This is a suggest command!".
+- `/post`: Le bot créera un message en embed dans un post et le publiera dans le canal (forum) spécifié.
+- `/suggest`: Le bot créera un message en embed pour une suggestion et le publiera dans le canal de suggestions défini (/setsuggest). 
 
 
-## Event Available
-- `ready`: The bot will log "Bot is online!" when it is ready.
+## Events Disponibles // Events Available
+
+// Events de Base
+- `ready`: The bot will log "Bot is online!" when it is ready. and send a message in server log channel.
 - `interactionCreate`: The bot will handle interactions when a command is used.
 
-## Event to be added
+## Events qui seront ajoutés // Events to be added
 
-// Utility Events
-- `guildMemberAdd`: The bot will welcome a new member when they join the server.
-- `guildMemberRemove`: The bot will say goodbye to a member when they leave the server.
+// Events Utilitaires
+- `guildMemberAdd`: Le bot accueillera un nouveau membre lorsqu'il rejoindra le serveur.
+- `guildMemberRemove`: Le bot dira au revoir à un membre lorsqu'il quittera le serveur.
 
-// Moderation Events
-- `Action Logs`: The bot will log moderation actions such as bans, kicks, and mutes.
-- `Message Logs`: The bot will log deleted and edited messages.
-- `Voice State Update`: The bot will log when members join or leave voice channels.
-- `Role Update`: The bot will log when roles are created, deleted, or updated.
-- `Channel Update`: The bot will log when channels are created, deleted, or updated.
-- `Member Update`: The bot will log when members update their nicknames or roles.
+// Events de Modération
+- `Action Logs`: Le bot enregistrera les actions de modération telles que les bannissements, les expulsions, les mises en sourdine, etc.
+- `Message Logs`: Le bot enregistrera les messages supprimés et modifiés.
+- `Member Join/Leave`: Le bot enregistrera lorsque les membres rejoignent ou quittent le serveur.
+- `Voice State Update`: Le bot enregistrera lorsque les membres rejoignent, quittent ou changent d'état dans les canaux vocaux.
+- `Role Update`: Le bot enregistrera lorsque les rôles sont créés, supprimés ou mis à jour.
+- `Channel Update`: Le bot enregistrera lorsque les canaux sont créés, supprimés ou mis à jour.
+- `Member Update`: Le bot enregistrera lorsque les informations des membres sont mises à jour (pseudo, avatar, etc.).
 
-// Twitch Streamer Alert Events
-- `Twitch Streamer Online`: The bot will send an alert when a Twitch streamer goes
+// Events Twitch Streamers
+- `Twitch Streamer Online`: Le bot enverra une alerte lorsqu'un streamer Twitch ajouté à la liste des alertes sera en ligne. (Avec intégration de webhook)
 
 // World Of Warcraft Events
 
-- `WoW News Update`: The bot will send an alert when there is a new World Of Warcraft news update. (With webook integration)
-- `WoW Patch Update`: The bot will send an alert when there is a new World Of Warcraft patch update. (With webook integration)
+- `WoW News Update`: Le bot enverra une alerte lorsqu'il y aura une nouvelle mise à jour des actualités de World Of Warcraft. (Avec intégration de webhook)
+- `WoW Patch Update`: Le bot enverra une alerte lorsqu'une nouvelle mise à jour de patch de World Of Warcraft sera publiée. (Avec intégration de webhook)
 
-## Commands to be added
+## Commande qui seront ajoutés // Commands to be added
 
-// Utility Commands
-- `/info`: The bot will respond with information about the bot.
-- `/status`: The bot will respond with its current status and uptime.
-- `/creator`: The bot will respond with information about its creator.
+// Commandes Utilitaires
+- `/creator`: Le bot répondra avec des informations sur le créateur du bot.
 
-// Moderation Commands
-- `/roleinfo`: The bot will respond with information about a role.
-- `/userinfo`: The bot will respond with information about a user.
-- `/ban`: The bot will ban a user from the server.
-- `/kick`: The bot will kick a user from the server.
-- `/mute`: The bot will mute a user in the server.
-- `/unmute`: The bot will unmute a user in the server.
-- `/warn`: The bot will warn a user in the server.
-- `/warnings`: The bot will respond with a list of warnings for a user.
-- `/clearwarnings`: The bot will clear all warnings for a user.
-- `/purge`: The bot will delete a specified number of messages from a channel.
-- `/lock`: The bot will lock a channel, preventing users from sending messages.
-- `/unlock`: The bot will unlock a channel, allowing users to send messages.
+// Commandes de Modération
+- `/ban`: Le bot bannira un utilisateur du serveur.
+- `/kick`: Le bot expulsera un utilisateur du serveur.
+- `/mute`: Le bot mettra en sourdine un utilisateur dans le serveur.
+- `/unmute`: Le bot enlèvera la sourdine d'un utilisateur dans le serveur.
+- `/warn`: Le bot émettra un avertissement à un utilisateur.
+- `/warnings`: Le bot répondra avec une liste des avertissements d'un utilisateur.
+- `/clearwarnings`: Le bot effacera tous les avertissements d'un utilisateur.
+- `/purge`: Le bot supprimera un nombre spécifié de messages dans un canal.
+- `/lock`: Le bot verrouillera un canal, empêchant les utilisateurs d'envoyer des messages.
+- `/unlock`: Le bot déverrouillera un canal, permettant aux utilisateurs d'envoyer des messages.
 
-- `/setlogchannel`: The bot will set the log channel for moderation logs.
-- `/setwelcomechannel`: The bot will set the welcome channel for new member welcomes.
-- `/setgoodbyechannel`: The bot will set the goodbye channel for member departures.
+- `/setlogchannel`: Le bot définira le canal de journalisation pour les événements de modération.
+- `/setwelcomechannel`: Le bot définira le canal de bienvenue pour les nouveaux membres.
+- `/setgoodbyechannel`: Le bot définira le canal d'adieu pour les membres qui quittent le serveur.
 
-// World Of Warcraft Commands
-- `/setwowalertchannel`: The bot will set the World of Warcraft alert channel.
+// World Of Warcraft Commandes 
+- `/setwowalertchannel`: Le bot définira le canal d'alerte pour les mises à jour de World of Warcraft.
 
-- `/wowprofile`: The bot will respond with a World of Warcraft profile of a user.
-- `/wowguild`: The bot will respond with a World of Warcraft guild information.
-- `/wownews`: The bot will respond with the latest World of Warcraft news.
-- `/wowitem`: The bot will respond with information about a World of Warcraft item.
-- `/armory`: The bot will respond with a World of Warcraft character's armory information.
+- `/wowprofile`: Le bot répondra avec le profil d'un joueur de World of Warcraft.
+- `/wowguild`: Le bot répondra avec les informations d'une guilde de World of Warcraft.
+- `/wownews`: Le bot répondra avec les dernières actualités de World of Warcraft.
+- `/wowitem`: Le bot répondra avec les informations d'un objet de World of Warcraft.
+- `/armory`: Le bot répondra avec le profil d'un joueur de World of Warcraft à partir de l'Armurerie Blizzard.
 
-// Alert Twitch Streamers Commands
-- `/addstreamer`: The bot will add a Twitch streamer to the alert list.
-- `/removestreamer`: The bot will remove a Twitch streamer from the alert list.
-- `/liststreamers`: The bot will respond with a list of Twitch streamers in the alert list.
-- `/setalertchannel`: The bot will set the alert channel for Twitch streamers.
+// Alert Twitch Streamers Commandes
+- `/addstreamer`: Le bot ajoutera un streamer Twitch à la liste des alertes.
+- `/removestreamer`: Le bot supprimera un streamer Twitch de la liste des alertes.
+- `/liststreamers`: Le bot listera tous les streamers Twitch actuellement dans la liste des alertes.
+- `/setalertchannel`: Le bot définira le canal d'alerte pour les streamers Twitch.
 
 
 dependencies:

@@ -20,9 +20,10 @@ export default async (client, interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
-      content: "❌ Erreur lors de l’exécution de la commande.",
-      ephemeral: true,
-    });
+    if(interaction.deferred || interaction.replied) {
+      await interaction.followUp({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', ephemeral: true });
+    } else {
+      await interaction.reply({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', ephemeral: true });
+    }
   }
 };

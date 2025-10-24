@@ -25,4 +25,16 @@ for (const file of eventFiles) {
   client.on(eventName, (...args) => event.default(client, ...args));
 }
 
+// Chargement automatique des commandes
+client.commands = new Map();
+
+const commandsPath = path.join(process.cwd(), "src/commands");
+const commandFiles = fs.readdirSync(commandsPath);
+
+for (const file of commandFiles) {
+  const command = await import(`./commands/${file}`);
+  client.commands.set(command.default.data.name, command.default);
+}
+
+
 client.login(process.env.DISCORD_TOKEN);
