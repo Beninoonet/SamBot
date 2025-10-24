@@ -10,7 +10,11 @@ A basic command is implemented.
 - `/serverinfo`: The bot will respond with "Twitch info command!".
 
 // Utility Commands
+- `/help`: The bot will respond with a list of available commands and their descriptions.
 - `/ping`: The bot will respond with "Pong!". // This command evolued to include latency measurement.
+- `/avatar`: The bot will respond with the avatar of a user.
+
+// Twitch Streamer Commands
 - `/twitchinfo`: The bot will respond with "Twitch info command!".
 
 // Message Commands
@@ -47,8 +51,6 @@ A basic command is implemented.
 ## Commands to be added
 
 // Utility Commands
-- `/help`: The bot will respond with a list of available commands and their descriptions.
-- `/avatar`: The bot will respond with the avatar of a user.
 - `/info`: The bot will respond with information about the bot.
 - `/status`: The bot will respond with its current status and uptime.
 - `/creator`: The bot will respond with information about its creator.
@@ -62,6 +64,14 @@ A basic command is implemented.
 - `/unmute`: The bot will unmute a user in the server.
 - `/warn`: The bot will warn a user in the server.
 - `/warnings`: The bot will respond with a list of warnings for a user.
+- `/clearwarnings`: The bot will clear all warnings for a user.
+- `/purge`: The bot will delete a specified number of messages from a channel.
+- `/lock`: The bot will lock a channel, preventing users from sending messages.
+- `/unlock`: The bot will unlock a channel, allowing users to send messages.
+
+- `/setlogchannel`: The bot will set the log channel for moderation logs.
+- `/setwelcomechannel`: The bot will set the welcome channel for new member welcomes.
+- `/setgoodbyechannel`: The bot will set the goodbye channel for member departures.
 
 // World Of Warcraft Commands
 - `/setwowalertchannel`: The bot will set the World of Warcraft alert channel.
