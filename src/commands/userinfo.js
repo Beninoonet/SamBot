@@ -1,4 +1,11 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const dataPath = path.join(__dirname, '../../../data/messages.json');
 
 export default {
     data: new SlashCommandBuilder()
@@ -13,6 +20,14 @@ export default {
         const user = interaction.options.getUser("utilisateur");
         const member = await interaction.guild.members.fetch(user.id).catch(() => null);
 
+        // Charger les données
+        let messages = {};
+        if(fs.existsSync(dataPath)) {
+            messages = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+        }
+
+        const messageCount = messages[interaction.guild.id]?.[user.id] || 0;
+
 
         const embed = new EmbedBuilder()
             .setColor(member?.displayHexColor || 0x00AE86)
@@ -21,6 +36,7 @@ export default {
             .addFields(
                 { name: '🆔 ID', value: user.id, inline: true },
                 { name: '📅 Compte créé le', value: `<t:${Math.floor(user.createdTimestamp / 1000)}:f>`, inline: true },
+                { name: '💬 Messages envoyés', value: `${messageCount}`, inline: true },
             );
 
             if(member) {
