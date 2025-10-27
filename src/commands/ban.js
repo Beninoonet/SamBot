@@ -1,4 +1,4 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -24,22 +24,42 @@ export default {
 
             const reason = interaction.options.getString('raison') || "Aucune raison";
 
-            await interaction.deferReply()
-
-            // Empêche l'auto ban
-            if(member.user.id === user.id){
-                interaction.editReply({ content: "Tu ne peux pas te bannir.", ephemeral: true})
-            };
-            // Empêche le ban de bot
-            if(member.user.id === interaction.client.user.id){
-                interaction.editReply({ content: "Tu ne pexu pas bannir le bot.", ephemeral: true})
+            if(!member){
+                return await interaction.reply({
+                    content: "🛑 Ce membre n'existe pas !",
+                    ephemeral: true
+                });
             }
-            // Empêche le bannissement des personnes qui ont la permissions (BanMembers)
-            if(member.permissions.has('BanMembers')) {
-                interaction.editReply({ content: "Tu ne peux pas bannir cette personne !", ephemeral: true})
-            } else {
-                interaction.ban({ deleteMessageDays: 7, reason })
-                interaction.editReply({ content: `${member} a été banni`, ephemeral: true})
+
+            if(!member.bannable || member.id === interaction.user.id || interaction.user.has(PermissionFlagsBits.BanMembers)){
+                return await interaction.reply({
+                    content: "⛔ Ce membre ne peut pas être banni.",
+                    ephemeral: true
+                });
+            }
+
+            try{
+                await member.ban({ reason });
+
+                // Embed
+                const embed = new EmbedBuilder()
+                    .setTitle("🔨Membre banni")
+                    .setColor("Red")
+                    .setThumbnail(user.displayAvatarURL())
+                    .addFields(
+                        {name: "👤 Membre", value: `${user.tag}(${user.id})`, inline: false},
+                        {name: "🧑‍⚖️ Modérateur", value: `${interaction.user.tag}`, inline: false},
+                        {name: "🗒️ Raison", value: `${reason})`, inline: false}
+                    )
+                    .setTimestamp();
+
+                    await interaction.reply({ embed: [embed] })
+            } catch (error){
+                console.error(error);
+                await interaction.reason({
+                    content: '❌ Erreur lors de la commande (merci de vérifier la console).',
+                    ephemeral: true
+                })
             }
         }
 }

@@ -20,6 +20,9 @@ Je tente aussi d'ajouter des fonctionnalités supplémentaires comme des alertes
 - `/userinfo`: Le bot répondra avec des informations sur un utilisateur.
 
 
+// Commandes De Modération
+- `/ban`: Le bot bannira un utilisateur du serveur.
+
 // Twitch Streamer Commands
 - `/twitchinfo`: Cette commande fournit des informations sur un streamer Twitch spécifié.
 
@@ -63,7 +66,6 @@ Je tente aussi d'ajouter des fonctionnalités supplémentaires comme des alertes
 - `/creator`: Le bot répondra avec des informations sur le créateur du bot.
 
 // Commandes de Modération
-- `/ban`: Le bot bannira un utilisateur du serveur.
 - `/kick`: Le bot expulsera un utilisateur du serveur.
 - `/mute`: Le bot mettra en sourdine un utilisateur dans le serveur.
 - `/unmute`: Le bot enlèvera la sourdine d'un utilisateur dans le serveur.
