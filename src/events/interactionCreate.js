@@ -1,29 +1,54 @@
-import fs from "fs";
-import path from "path";
+// events/interactionCreate.js
+export const name = 'interactionCreate';
+export const once = false;
 
-const commands = new Map();
-const commandsPath = path.join(process.cwd(), "src/commands");
-const commandFiles = fs.readdirSync(commandsPath);
-
-for (const file of commandFiles) {
-  const command = await import(`../commands/${file}`);
-  commands.set(command.default.data.name, command.default);
-}
-
-export default async (client, interaction) => {
-  if (!interaction.isChatInputCommand()) return;
-
-  const command = commands.get(interaction.commandName);
-  if (!command) return;
-
+/**
+ * @param {import('discord.js').Interaction} interaction
+ * @param {import('discord.js').Client} client
+ */
+export async function execute(interaction, client) {
   try {
-    await command.execute(interaction);
+    // 🎯 Vérifie que c'est une commande slash
+    if (interaction.isChatInputCommand()) {
+      const command = client.commands.get(interaction.commandName);
+      if (!command) return;
+
+      await command.execute(interaction, client);
+    }
+
+    // 🎛️ Gestion des context menus (clic droit)
+    else if (interaction.isContextMenuCommand()) {
+      const command = client.commands.get(interaction.commandName);
+      if (!command) return;
+
+      await command.execute(interaction, client);
+    }
+
+    // 🧩 Gestion des boutons
+    else if (interaction.isButton()) {
+      console.log(`🔘 Bouton cliqué : ${interaction.customId}`);
+      // Tu peux gérer ici tes boutons custom
+    }
+
+    // 🎚️ Gestion des menus déroulants (select menus)
+    else if (interaction.isStringSelectMenu()) {
+      console.log(`📋 Menu sélectionné : ${interaction.customId}`);
+      // Gère tes menus ici
+    }
   } catch (error) {
-    console.error(error);
-    if(interaction.deferred || interaction.replied) {
-      await interaction.followUp({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', ephemeral: true });
+    console.error('❌ Erreur dans interactionCreate:', error);
+
+    // Empêche un second reply si déjà répondu
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp({
+        content: '⚠️ Une erreur est survenue lors de cette interaction.',
+        ephemeral: true,
+      });
     } else {
-      await interaction.reply({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', ephemeral: true });
+      await interaction.reply({
+        content: '⚠️ Une erreur est survenue lors de cette interaction.',
+        ephemeral: true,
+      });
     }
   }
-};
+}

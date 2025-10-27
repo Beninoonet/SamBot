@@ -1,7 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export default async (client) => {
+export const name = 'clientReady';
+export const once = true;
+
+export async function execute(client) {
  // Affiche un message dans la console lorsque le bot est prêt
   console.log(`✅ Connecté en tant que ${client.user.tag}`);
 

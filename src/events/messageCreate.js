@@ -1,33 +1,39 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// events/messageCreate.js
+import { EmbedBuilder } from 'discord.js';
+import dotenv from "dotenv";
+dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const name = 'messageCreate';
+export const once = false;
 
-const dataPath = path.join(__dirname, '../../data/messages.json');
+/**
+ * @param {import('discord.js').Message} message
+ * @param {import('discord.js').Client} client
+ */
+export async function execute(message, client) {
+  // 🔒 Sécurité : éviter les crashs si message n’existe pas
+  if (!message || !message.author) return;
 
-// Charger les données existantes
-let messages = {};
-if (fs.existsSync(dataPath)) {
-  messages = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  // 🚫 Ignore les messages des bots ou en DM
+  if (message.author.bot || !message.guild) return;
+
+  // 🪵 Exemple de log en console
+  console.log(`[${message.guild.name}] ${message.author.tag} : ${message.content}`);
+
+  // Exemple : log dans un salon de logs
+  const logChannelId = process.env.LOG_CHANNEL_ID; // 🪣 Ton ID de salon
+  const logChannel = message.guild.channels.cache.get(logChannelId);
+  if (!logChannel) return;
+
+  const embed = new EmbedBuilder()
+    .setColor('Blue')
+    .setAuthor({
+      name: message.author.tag,
+      iconURL: message.author.displayAvatarURL({ dynamic: true })
+    })
+    .setDescription(`💬 Nouveau message dans ${message.channel}`)
+    .addFields({ name: 'Contenu', value: message.content || '*[vide]*' })
+    .setTimestamp();
+
+  await logChannel.send({ embeds: [embed] });
 }
-
-export default {
-  name: 'messageCreate',
-  async execute(message) {
-    if (message.author.bot) return;
-
-    const userId = message.author.id;
-    const guildId = message.guild.id;
-
-    // Crée la structure si elle n'existe pas
-    if (!messages[guildId]) messages[guildId] = {};
-    if (!messages[guildId][userId]) messages[guildId][userId] = 0;
-
-    messages[guildId][userId] += 1;
-
-    // Sauvegarde du compteur (tu peux optimiser avec un délai pour éviter trop d’écritures)
-    fs.writeFileSync(dataPath, JSON.stringify(messages, null, 2));
-  },
-};

@@ -3,6 +3,10 @@ import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const client = new Client({
   intents: [
@@ -16,13 +20,20 @@ const client = new Client({
 });
 
 // Chargement automatique des événements
-const eventsPath = path.join(process.cwd(), "src/events");
-const eventFiles = fs.readdirSync(eventsPath);
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
   const event = await import(`./events/${file}`);
-  const eventName = file.split(".")[0];
-  client.on(eventName, (...args) => event.default(client, ...args));
+  const { name, once, execute } = event;
+
+  if (!name || !execute) {
+    console.warn(`⚠️  L’événement ${file} n’a pas de "name" ou "execute" valide.`);
+    continue;
+  }
+
+  if (once) client.once(name, (...args) => execute(...args, client));
+  else client.on(name, (...args) => execute(...args, client));
 }
 
 // Chargement automatique des commandes
