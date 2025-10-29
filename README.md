@@ -21,6 +21,7 @@ Je tente aussi d'ajouter des fonctionnalités supplémentaires comme des alertes
 
 
 // Commandes De Modération
+- `/purge`: Le bot supprimera un nombre spécifié de messages dans un canal.
 - `/ban`: Le bot bannira un utilisateur du serveur.
 
 // Twitch Streamer Commands
@@ -72,7 +73,7 @@ Je tente aussi d'ajouter des fonctionnalités supplémentaires comme des alertes
 - `/warn`: Le bot émettra un avertissement à un utilisateur.
 - `/warnings`: Le bot répondra avec une liste des avertissements d'un utilisateur.
 - `/clearwarnings`: Le bot effacera tous les avertissements d'un utilisateur.
-- `/purge`: Le bot supprimera un nombre spécifié de messages dans un canal.
+
 - `/lock`: Le bot verrouillera un canal, empêchant les utilisateurs d'envoyer des messages.
 - `/unlock`: Le bot déverrouillera un canal, permettant aux utilisateurs d'envoyer des messages.
 

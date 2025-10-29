@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import fetch from "node-fetch";
 dotenv.config();
 
 export const name = 'clientReady';
@@ -32,5 +33,7 @@ export async function execute(client) {
 
       channel.send(`///////////////\n\n✅ ${client.user.tag} est maintenant en ligne !\n\n📶 Ping du bot : **${BotPing} ms**.\n\n📚 Connecté à **${guildsCount} serveurs**.\n\n///////////////`)
     }
+
+
   }
-};
+}
